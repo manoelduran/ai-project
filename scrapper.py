@@ -5,9 +5,9 @@ from bs4 import BeautifulSoup
 def get_text_from_url(url):
     response = requests.get(url)
     if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
-        for script in soup(["script", "style"]):
-            script.extract()
+        soup = BeautifulSoup(response.content, 'html.parser')
+        for script_or_style in soup(["script", "style"]):
+            script_or_style.decompose()
 
         text = soup.get_text()
         lines = (line.strip() for line in text.splitlines())
